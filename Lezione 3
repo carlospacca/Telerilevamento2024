@@ -1,0 +1,8 @@
+# Per installare dei pacchietti all'interno di R, si utilizza il comando install.packages()
+install.packages("terra")
+
+# Si possono poi installare pacchetti non controllati direttamente dagli sviluppatori del CRAN, ma anche da utenti. imageRy è un pacchetto sviluppato da Github, per installare questo tipo di pacchetti
+# Dipende da un pacchetto che si chiama install_github, ma questa funzione è dipendente da un altro pacchetto che prende il nome di devtools (Che invece è un pack ufficiale del cran)
+
+devtools::install_github("ducciorocchini/imageRy")
+library(imageRy)
