@@ -1,0 +1,16 @@
+# Satellite data visualisation in R by imageRy
+
+library("terra")
+library("imageRy")
+
+# All the functions that starts with im. are imageRy's functions
+
+# List of data available in imageRy
+im.list()
+
+# Where we can find all those data? We can Import data
+in.import()
+
+# For thie exercise we are going to use "matogrosso_ast_2006209_lrg.jpg"
+im.import("matogrosso_ast_2006209_lrg.jpg" )
+mato <- im.import("matogrosso_ast_2006209_lrg.jpg" )
