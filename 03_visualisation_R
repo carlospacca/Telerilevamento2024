@@ -14,3 +14,73 @@ in.import()
 # For thie exercise we are going to use "matogrosso_ast_2006209_lrg.jpg"
 im.import("matogrosso_ast_2006209_lrg.jpg" )
 mato <- im.import("matogrosso_ast_2006209_lrg.jpg" )
+
+# Per cercare immagini satellitari, si può cercare su Earth Observatory
+
+# Plotting the data
+# Si può plottare utilizzando plot()
+
+plot(mato)
+
+# Con mato i risultati non ancora siamo in graado di interpretarli perchè è un'immagine con già più bande presenti, montiamo l'immagine "sentinel.dolomites.b2.tif"
+
+im.import("sentinel.dolomites.b2.tif")
+b2 <- im.import("sentinel.dolomites.b2.tif")
+
+# Con la funzione colorRampPalette() possiamo andare a cambiare la scala di colori, con l'array mettiamo i colori, (3) sta ad indicare che vogliamo solo 3 sfumature di colore.
+
+colorRampPalette(c("black", "grey", "light grey"))(3)
+clg <- colorRampPalette(c("black", "grey", "light grey"))(3)
+
+# Plottiamo quindi b2 inserendo la variabile col (colore) mettenro col = clg
+
+plot (b2, col=clg)
+
+
+# Andando a cambiare il numero di sfumature, l'immagine uscirà meno marcata
+# Se andiamo a vedere i colori, tutta la zona a bassa riflettanza sarà costituira dalla vegetazione perchè assorbe molta luce per la fotosintesi
+
+# Importiamo anche la banda 3, la banda 4 e la banda 8
+
+# Creiamo un MULTIFRAME on cui uniremo tutte le bande messe insieme, sia b2, che b3, che b4 che b8. B2 è la banda del blu, B3 quella del verde, B4 quella del rosso, B8 quella del vicino infrarosso
+# Utilizzeremo la funzione par a cui aggiungiamo in argomento "mf" che sta per multiframe
+
+par(mf)
+
+# Dobbiamo però aggiungere gli argomenti nelle righe e gli argomenti nelle colonne, prima creiamo una sorta di telaio iniziale
+
+par(mfrow=c(2,2))
+
+# Andiamo poi a scrivere i singoli plot, come plot(b2, col=clcyan)
+
+> plot(b2, col=clcyan)
+> plot(b3, col=clcyan)
+> plot(b4, col=clcyan)
+> plot(b8, col=clcyan)
+
+# ESERCIZIO
+# plot the four bands in a single row
+
+par(mfrow=c(1,4))
+> plot(b2, col=clcyan)
+> plot(b3, col=clcyan)
+> plot(b4, col=clcyan)
+> plot(b8, col=clcyan)
+
+# Per non stare ad impilare ogni singola banda si può utilizzare la funzione stack, che impilerà automaticamente le bande considerandoli come degli elementi di un array
+# Si utilizza una procedura che si chiama "stack". Praticamente li impila come un mazzo di carte.
+
+stacksent <- c(b2,b3,b4,b8)
+
+# Così abbiamo creato delle immagini satellitari, possiamo plottarli con plot
+
+plot (stacksent, col=clcyan)
+
+# Per lavorare sul singolo elemento di uno stack, bisogna mettere due parentesi quadre perchè una parentesi quadra serve ad evidenziare una sola colonna, per utilizzarla sui raster
+# che si lavora in due dimensioni occorre mettere due parentesi quadre
+
+plot(stacksent[[4]], col=clcyan)
+
+# Per cancellare il precedente par
+
+dev.off()
