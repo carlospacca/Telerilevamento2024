@@ -26,7 +26,9 @@ plot(mato)
 
 im.import("sentinel.dolomites.b2.tif")
 b2 <- im.import("sentinel.dolomites.b2.tif")
-
+b3 <- im.import("sentinel.dolomites.b3.tif")
+b4 <- im.import("sentinel.dolomites.b4.tif")
+b8 <- im.import("sentinel.dolomites.b8.tif")
 # Con la funzione colorRampPalette() possiamo andare a cambiare la scala di colori, con l'array mettiamo i colori, (3) sta ad indicare che vogliamo solo 3 sfumature di colore.
 
 colorRampPalette(c("black", "grey", "light grey"))(3)
@@ -42,7 +44,8 @@ plot (b2, col=clg)
 
 # Importiamo anche la banda 3, la banda 4 e la banda 8
 
-# Creiamo un MULTIFRAME on cui uniremo tutte le bande messe insieme, sia b2, che b3, che b4 che b8. B2 è la banda del blu, B3 quella del verde, B4 quella del rosso, B8 quella del vicino infrarosso
+# Creiamo un MULTIFRAME on cui uniremo tutte le bande messe insieme, sia b2, che b3, che b4 che b8. B2 è la banda del blu (490 nm), B3 quella del verde (560 nm), B4 quella del rosso (665 nm), 
+# B8 quella del vicino infrarosso (842 nm)
 # Utilizzeremo la funzione par a cui aggiungiamo in argomento "mf" che sta per multiframe
 
 par(mf)
@@ -84,3 +87,65 @@ plot(stacksent[[4]], col=clcyan)
 # Per cancellare il precedente par
 
 dev.off()
+
+# I colori sui computer si montano molto spesso con il concept RGB, questo si basa su tre filtri che sono RED, GREEN, BLUE. La combinazione di questi 3 filtri porta a tutti i potenziali colori, eliminando
+# uno di questi filtri e mettendoci al posto l'infrarosso, Richard Moss crea dei filtri e li mette difronte alle sue macchine, quindi tutto quello che riflettono le piante, quindi l'infrarosso diventa
+# del colore del filtro sostituito. Ad esempio mettendo l'infrarosso al posto del rosso da come risultato le piante rosse.
+
+# RGB PLOTTING
+
+# stacksent [[1]] = b2 = blue
+# stacksent [[2]] = b3 = green
+# stacksent [[3]] = b4 = red
+# stacksent [[4]] = b8 = nir or nearinfrared
+
+# In imageRy si trova una funzione che si chiama im.plotRGB() si dichiara il nome dell'immagine e le tre componenti che rappresentano le tre componenti r,g,b
+# Il primo step consiste nell'associare ad ogni componente la sua banda, alla componente red associamo una banda, alla componente green un'altra banda e alla componente blue un'altra banda
+
+
+im.plotRGB(stacksent, r=3, g=2, b=1)
+#OPPURE
+im.plotRGB(stacksent, 3, 2, 1)
+
+# Per sostituire il RED con il NIR andiamo ad effettuare un'azione banale
+
+im.plotRGB(stacksent, 4, 2, 1)
+
+# In questo modo tutto quello che riflette l'infrarosso diventa rosso
+
+# Si può fare un'operazione molto più interessante facendo scattare tutte quante le bande, sostituendo tutti i colori a caso
+
+im.plotRGB(stacksent, 4, 3, 2)
+
+par(mfrow=c(1,3))
+im.plotRGB(stacksent, 3, 2, 1)
+im.plotRGB(stacksent, 4, 2, 1)
+im.plotRGB(stacksent, 4, 3, 2)
+
+# Mettiamo il nir sul verde
+
+im.plotRGB(stacksent, 3, 4, 2)
+
+# Con questa visualizzazione si vedono meglio le differenze tra gli alberi, le zone di terreno nudo soo spesso rosa
+
+# Mettiamo il nir sul blu
+
+im.plotRGB(stacksent, 3, 2, 4) 
+
+# Con questa visualizzazione il terreno è spesso giallino
+
+# Final multiframe: EX: Put the four images all together
+
+par(mfrow=c(4,1))
+im.plotRGB(stacksent, 3, 2, 1) # nat color
+im.plotRGB(stacksent, 4, 2, 1) # nir on red
+im.plotRGB(stacksent, 3, 4, 1) # nir on green
+im.plotRGB(stacksent, 3, 2, 4) # nir on blue
+
+# Si possonon creare delle matrici di grafici che oltre a questo calcola anche gli indici di correlazione di perason, e altre mille cose
+
+pairs(stacksent)
+
+# Sulla diagonale ci sono le 4 bande, il primo elemento è la banda del blu, il secondo elemento è la banda del verde, la terza è la banda del rosso e la quarta è quella del nir
+# I grafici ci fanno vedere la correlazione di tutti i pixel di una banda contro un altra e a questo corrispondono gli indici di Pearson. Questa correlazione si abbassa considerando il nir
+# Questo perchè aggiunge moltissime informazioni
