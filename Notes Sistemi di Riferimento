@@ -1,0 +1,35 @@
+# La terra può essere divisa in infinte linee immagginarie, l'unica linea realle è quella dell'Equatore. I restanti mediani e paralleli sono completamente inventati dall'uomo. Per rappresentare la terra
+# ci sono miliardi di modi disponibili, ma la terra è un geoide, che non è mai concavo, il centro della terra è influenzato dalla forza di gravità e da superfici equipotenziali che sono perpendicolari
+# a questa forza, tra tutte queste superfici ce n'è una che approssima al meglio la superficie dei mari (l'altezza media dei mari). C'è quindi la necessità di utilizzare un'altra superficie per approssimare
+# al meglio possibile la forma della terra, a parte la superficie topografica, che si può ignorare, c'è la forma dell'ellissoide, che tra tutte è la forma che approssima meglio il geoide.
+# In alcuni casi l'ellissoide tocca perfettamente il geoide, in altri casi viene evidenziato un distacco detto oscilllazione geoidica, che va corretta. L'ellissoide di Hayford è uno dei più utilizzati
+# piazzato su un punto del pianeta genera un DATUM. Il datum italiano si chiamara Roma40, perchè veniva piazzato un'ellissoide su MonteMario, e così come l'Italia tutti i paesi. Nella seconda guerra mondiale
+# ci fu la necessità di unificare le coordinate sempre utilizzando Hayford piazzato su tutto il mondo in vari osservatori, creando il datum ED50; Gli USA avevano sviluppato un proprio datum chiamato
+# Ellissoide di Clarke, è un ellissoide con un'eccentricità maggiore, perfetto per valutare zone che variano molto in senso latitudinale, come gli USA; Lo hanno piazzato sugli Stati Uniti creando il
+# NAD83, North American Datum. 
+# Per le misure si deve prendere la normale ad un punto e connetterla perpendicolarmente al piano equatoriale e si calcola l'angolo di distanza dal piano equatoriale. Non si parte dal centro perchè
+# se passasse dal centro allora la terra sarebbe sferica. Ci sono due situazioni per cui passa dal centro l'equatore e i due poli.
+# La longitudine viene calcolata su un meridiano centrale che va da 180° a -180°. Se si cambia l'ellissoide di riferimento, cambia la misura, questo ellissoide di riferimento è il DATUM. La latitudine quindi
+# non è assoluta.
+# Dal 1984 viene sviluppato il WGS (World Geodetic System), creato negli Stati Uniti ed utilizzato tutt'ora.
+# Non si può rappresentare un geoide su un piano "stendendolo" normalmente, ma grazie a Gauss è stata trovata una proiezione che svolge l'ellissoide attorno ad un meridiano, ci si mette su un meridiano, come
+# ad esempio Greenwich, e ci si fa "girare" l'ellissoide in vari piccoli pezzi creando delle zone chiamate FUSI (Non hanno nulla a che fare con i fusi orari), ogni fuso sono 6° per un totale di di 60 fusi 
+# (angolo di 360°) la y è la distanza dall'equatore, la x è la distanza dal meridiano centrale, l'Italia casca nella 32 e nella 33. Siccome la distanza dal meridiano a sinistra di questo potrebbe far risultare 
+# coordinate negative (e questo risulterebbe scomodo) si da una falsa origine al meridiano di 500 mila chilometri.
+# La proiezione di Mercatore non si basa su un meridiano, ma si basa sull'equatore, questa è stata trasposta su un meridiano creando la Universal Transverse Mercator (UTM) e l'hanno data a Mercatore piuttosto
+# che a Gauss perchè nel clima post seconda guerra mondiale non volevano dare il merito ad un tedesco.
+
+class       : SpatRaster 
+dimensions  : 934, 1059, 1  (nrow, ncol, nlyr)
+resolution  : 10, 10  (x, y)
+extent      : 740350, 750940, 5158820, 5168160  (xmin, xmax, ymin, ymax)
+coord. ref. : WGS 84 / UTM zone 32N (EPSG:32632) 
+source      : sentinel.dolomites.b2.tif 
+name        : sentinel.dolomites.b2 
+min value   :                  1338 
+max value   :                  6903 
+
+# Stiamo utilizzando WGS84 siamo nel fuso 32N dell'UTM, ci troviamo tra i 5158820 e 5168160 m dall'equatore e 740350 e 750949 m dal meridiano, questa immagine quindi copre 10000 m.
+# Si può passare da un sistema all'altro con una trasformazione detta di Helmert in cui avviene una traslazione su X, Y e Z e per far combaciare i punti vengono anche ruotati i tre assi, viene chiamata anche
+# trasformazione a 6 parametri.
+# EPSG:32632 è un codice che viene utilizzato sia su R che su GRASS, utilizzato orinariamente per il petrolio.
