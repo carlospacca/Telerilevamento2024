@@ -84,3 +84,5 @@ dev.off()
 par(mfrow=c(1,2))
 plot(ndvi1992, col=cl)
 plot(ndvi2006, col=cl)
+
+                   
