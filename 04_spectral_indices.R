@@ -52,3 +52,35 @@ par(mfrow=c(2,3))
 # Le immagini dei satelliti ad 8 bit vanno da 0 a 255 (256 informazioni), l'ENSTAT utilizza immagini a 16 bit molto più pesanti. Questo concetto prende il nome di risoluzione radiometrica ci sono                  
 # altri tipi di risoluzioni: la spaziale (che racchiude le info alla dimensione del pixel) e la risoluzione spettrale in cui sono contate le larghezze delle bande in cui l'immagine è registrata
                    
+# Calculating the DVI (Difference Vegetation Index)
+dvi1992 = m1992[[1]] - m1992[[2]] 
+# alternative way of coding:
+# dvi1992 = m1992$matogrosso~2219_lrg_1 - m1992$matogrosso~2219_lrg_2
+
+# plotting the DVI
+cl <- colorRampPalette(c("darkblue", "yellow", "red", "black")) (100)
+plot(dvi1992, col=cl)
+
+# 2006
+m2006 <- im.import("matogrosso_ast_2006209_lrg.jpg")
+
+# dvi 2006
+dvi2006 = m2006[[1]] - m2006[[2]] 
+plot(dvi2006, col=cl)
+
+# Exercise: plot the dvi1992 beside the dvi2006
+par(mfrow=c(1,2))
+plot(dvi1992, col=cl)
+plot(dvi2006, col=cl)
+
+stackdvi <- c(dvi1992, dvi2006)
+pairs(stackdvi)
+
+# Normalized Difference Vegetation Index
+ndvi1992 = dvi1992 / (m1992[[1]]+m1992[[2]])
+ndvi2006 = dvi2006 / (m2006[[1]]+m2006[[2]])
+
+dev.off()
+par(mfrow=c(1,2))
+plot(ndvi1992, col=cl)
+plot(ndvi2006, col=cl)
