@@ -104,3 +104,4 @@ ggplot(tabout, aes(x=class, y=y2006, color=class)) + geom_bar(stat="identity", f
 p1 <- ggplot(tabout, aes(x=class, y=p1992, color=class)) + geom_bar(stat="identity", fill="white")
 p2 <- ggplot(tabout, aes(x=class, y=p2006, color=class)) + geom_bar(stat="identity", fill="white")
 p1 + p2
+
