@@ -54,4 +54,7 @@ soil
 ext <- c(25,30 , 55, 58)
 soilcrop <- crop(soil,ext)
 plot(soilcrop)
+
+# Se voglio plottare solo la banda 1
+
 plot(soilcrop[[1]])
