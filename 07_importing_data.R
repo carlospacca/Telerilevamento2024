@@ -44,3 +44,14 @@ im.plotRGB(ocean, 2, 1, 3)
 # Water Cycle
 # Riguarda la copertura dell'acqua di tutto quanto il pianeta
 # La prima categoria è Lake Water
+
+# Per importare i dati da Copernicus, bisogna prima fare il login, poi dal login andare su una delle risorse, fare search e scaricare un dato, si apre una finestra, scaricare il primo file
+# Bisogna aver caricato la library terra
+soil <- rast("c_gls_SSM1km_202404210000_CEURO_S1CSAR_V1.2.1.nc")
+soil
+
+# Se dobbiamo analizzare solo un'area e non tutta quanta la superficie del pianeta doppiamo croppare il dato, definendo con c la xmin, la xmax, la ymin e la ymax definita con un estensione
+ext <- c(25,30 , 55, 58)
+soilcrop <- crop(soil,ext)
+plot(soilcrop)
+plot(soilcrop[[1]])
