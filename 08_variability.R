@@ -46,6 +46,29 @@ plot(nir, col=cl)
 sd3 <- focal(nir, matrix(1/9, 3, 3), fun =sd)
 plot(sd3)
 
-# Dato che i colori sono fastidiosi per i daltonici, usiamo il pacchetto viridis per renderlo meglio visibile anche a loro
+# Dato che i colori sono fastidiosi per i daltonici, usiamo il pacchetto viridis per renderlo meglio visibile anche a loro. Usiamo una colorRampPalette con viridis, il 7 serve per la legenda
 
-plot(sd3, 
+viridisc <- colorRampPalette(viridis(7))(100)
+plot(sd3, col=viridisc)
+
+# Vediamo in questo modo la variabilità più alta nelle zone verde-verde chiaroc e la deviazione standard nelle varie divisioni 3x3
+
+# calculate the sd mw of 7 pixels
+
+sd7 <- focal(nir, matrix(1/49, 7, 7)
+plot(sd7)
+plot(sd7, col=viridisc)
+
+# Lo famo anche a 13 perchè semo matti
+sd13 <- focal(nir, matrix(1/169, 13, 13)
+plot(sd13)
+plot(sd13, col=viridis)             
+
+# Facciamo uno stack delle tre sd e plottiamo che siamo fighissimi
+sdstack <- c(sd3, sd7, sd13)
+plot(sdstack, col=viridisc)
+
+# Analisi multivariata
+# Prendiamo come esempio due bande la banda 1 e la banda 2 e prendendo il riferimento dei pixel plottiamo una banda rispetto all'altra. Il primo asse spiega gran parte della varianza, poichè 
+# spigea il 90% di questa
+# Invece di scegliere il nir scegliamo il primo asse chiamato pc1 perchè è più rappresentativo in caso di multivariata. La correlazione che misura è quella di Perason che va da -1 ad 1.
