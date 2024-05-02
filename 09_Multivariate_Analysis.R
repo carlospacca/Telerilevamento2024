@@ -1,4 +1,4 @@
-# Mutlivariate Analysis
+ # Mutlivariate Analysis
 # Spesso si lavora con centinaia di bande ed è impossibile sceglierne una su cui lavorare, per prima cosa dobbiamo ridurre le 3 dimensioni in due dimensioni, nel nostro sistema tridimensionale però
 # ne esiste una quarta in cui degli oggetti che normalmente non sono relazionati tra loro lo sono, questo lo si può applicare anche nella relazione tra immagini bidimensionali
 # e immagini tridimensionali, in generale due oggetti che sembrano non essere linkati in realtà lo sono in un altra direzione.
@@ -26,6 +26,7 @@ im.plotRGB(sentdo, r=4, g=3, b=2) # in questo modo abbiamo messo il nir (che ha 
 
 im.plotRGB(sentdo, r=3, g=4, b=2) # in questo modo abbiamo messo il nir nel verde, l'immagine infatti è molto verde
 
-# Calcoliamo la correlazione di Pearson di sentdo, con il comando pairs
+# Calcoliamo la correlazione di Pearson di sentdo, con il comando pairs, questo ci aiuta a capire quanto le bande sono correlate tra loro, la banda del blu e quella del verde sono molto correlate
+# abbiamo infatti una correlazione di circa 0,99, il verde con il rosso ha una grande correlazione molto prossima all'1, le correlazioni con il nir sono particolari.
 
 pairs(sentdo)
