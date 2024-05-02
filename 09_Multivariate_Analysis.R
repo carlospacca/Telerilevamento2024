@@ -30,3 +30,31 @@ im.plotRGB(sentdo, r=3, g=4, b=2) # in questo modo abbiamo messo il nir nel verd
 # abbiamo infatti una correlazione di circa 0,99, il verde con il rosso ha una grande correlazione molto prossima all'1, le correlazioni con il nir sono particolari.
 
 pairs(sentdo)
+
+# PCA
+# Si tratta della Prcincipal Component Analysis, ovvero l'analisi delle Componenti Principali (traduco perchè so che hai un A2 e dall'alto del mio C1 posso darti una mano)
+# con im.pca calcoliamo i valori delle componenti principali delle 4 bande. im.pca nella visualizzazione delle immagini da sempre le prime 3 del plot, nel nostro caso PC4 la esclude.
+
+im.pca(sentdo)
+pcaimage <- im.pca(sentdo)
+
+# Ci escono i valori delle singole deviazioni standard, da qui calcoliamo la somma di tutte le sd
+
+tot <- sum(1615.46852, 466.56130, 49.35619, 25.28757)
+
+# Ci calcoliamo poi la percentuale di variabilità spiegata dall'asse per ogni singolo asse con un banale calcolo percentuale
+
+1615.46852*100/tot
+
+466.56130*100/tot
+
+49.35619*100/tot
+
+25.28757*100/tot
+
+# La prima componente principale spiega circa il 70% della variabilità infatti l'immagine è molto simile all'immagine satellitare, se la compariamo alla terza dove viene spiegato circa il 2% della
+# informmazione l'immagine è quasi totalmente ruore di fondo
+
+# Plottiamo la quarta solo per il meme
+
+plot(pcimage[[4]], col=vir)
