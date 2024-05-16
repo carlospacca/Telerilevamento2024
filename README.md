@@ -2,7 +2,7 @@
 
 This repo is thought for remote sensing lectures at UNIBO 📡
 
-## Sottocapitolo casuale generato da IA
+## IA-Generated subsection
 
 ChatGPT joineded the chat and typed: "Hello world!", then he dropped a to-do list:
 + Conquer the universe
@@ -13,3 +13,8 @@ This may be considered illegal in all 193 UN member states, but try selling it w
 
 > **External link to the NASA website**
 [BBEG](https://www.nasa.gov)
+
+## Main methods used to conquer the whole universe
+```{r}
+library(imageRy)
+```
