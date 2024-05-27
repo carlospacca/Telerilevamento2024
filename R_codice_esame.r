@@ -45,6 +45,14 @@ b2017nir <- cic2017fc[[1]] # Banda nir dell'immagine Cicerana del 2017
 
 cic2017 <- c(b2017r, b2017g, b2017b, b2020nir)
 
+# Per controllare le correlazioni tra le varie bande dei nostri oggetti andiamo a calcolare quelli che sono gli indici di correlazione tra le bande attraverso la funzione pairs
+
+pairs(cic2017)
+
+pairs(cic2020)
+
+pairs(cic2024)
+
 # Fatto ciò vado a creare un reticolo che mi permette di confrontare le tre immagini con i colori naturali, per controllare se a vista d'occhio si vedono delle differenze nella vegetazione.
 
 par(mfrow=c(2,2)) # La funzione par mi peremtte di creare un reticolo, specificando mfrow con c(2,2) creo un reticolo di 2x2
@@ -97,4 +105,14 @@ cicNDVI <- c(NDVIcic2017, NDVIcic2020, NDVIcic2024)
 
 im.plotRGB(cicNDVI, r=1, g=2, b=3)
 
-# Per rendere le informazioni accessibili anche a coloro che soffronto di daltonismo, replico i plot con il pacchetto viridis
+# Per rendere le informazioni accessibili anche a coloro che soffronto di daltonismo, posso però plottare solo i valori DVI e NDVI.
+
+par(mfrow = c(3,1))
+plot(DVIcic2017, col=viridis(100))
+plot(DVIcic2020, col=viridis(100))
+plot(DVIcic2024, col=viridis(100))
+
+par(mfrow = c(3,1))
+plot(NDVIcic2017, col=viridis(100))
+plot(NDVIcic2020, col=viridis(100))
+plot(NDVIcic2024, col=viridis(100))
