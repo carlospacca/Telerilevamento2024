@@ -15,7 +15,7 @@ setwd("C:/Users/spacc/Downloads")
 cic2020tc <- rast("CiceranaTC2020.jpg") # Si tratta dell'immagine True Color della Cicerana a Maggio 2020; R=1, G=2, B=3
 cic2020fc <- rast("CiceranaFC2020.jpg") # Immagine False Color della Cicerana a Maggio 2020; NIR = 1, G=2, B=3
 cic2024tc <- rast("CiceranaTC2024.jpg") # Immagine TC Cicerana Maggio 2024; R=1, G=2, B=3
-cic2024fc <- rast("CiceranaFC2020.jpg") # Immagine FC Cicerana Maggio 2024; NIR = 1, G=2, B=3
+cic2024fc <- rast("CiceranaFC2024.jpg") # Immagine FC Cicerana Maggio 2024; NIR = 1, G=2, B=3
 cic2017tc <- rast("CiceranaTC2017.jpg") # Immagine TC Cicerana Maggio 2017; R=1, G=2, B=3
 cic2017fc <- rast("CiceranaFC2017.jpg") # Immagine FC Cicerana Maggio 2017; NIR = 1, G=2, B=3
 
@@ -43,7 +43,7 @@ b2017g <- cic2017tc[[2]] # Banda verde dell'immagine Cicerana del 2017
 b2017b <- cic2017tc[[3]] # Banda blu dell'immagine Cicerana del 2017
 b2017nir <- cic2017fc[[1]] # Banda nir dell'immagine Cicerana del 2017
 
-cic2017 <- c(b2017r, b2017g, b2017b, b2020nir)
+cic2017 <- c(b2017r, b2017g, b2017b, b2017nir)
 
 # Per controllare le correlazioni tra le varie bande dei nostri oggetti andiamo a calcolare quelli che sono gli indici di correlazione tra le bande attraverso la funzione pairs
 
@@ -91,7 +91,7 @@ NDVIcic2024 <- DVIcic2024 / cic2024[[4]] + cic2024[[1]]
 
 # Adesso creo un reticolo 2x2 in cui inserisco i plot dei vari NDVI per trare le conclusioni circa la riduzione o l'aumento della massa vegetale viva.
 
-par(mfrow = c(2,2))
+par(mfrow = c(3, 1))
 plot(NDVIcic2017, col=ccl)
 plot(NDVIcic2020, col=ccl)
 plot(NDVIcic2024, col=ccl)
@@ -104,6 +104,58 @@ cicNDVI <- c(NDVIcic2017, NDVIcic2020, NDVIcic2024)
 # trarre le mie conclusioni su dove e quando si è registrato un valore di NDVI maggiore.
 
 im.plotRGB(cicNDVI, r=1, g=2, b=3)
+
+
+# Si può anche ottenere un risultato simile usando il metodo della classificazione, questo prevede una selezione da parte dell'operatore del numero di livelli energetici presenti nell'immagine, al fine di 
+# capirne la copertura vegetale. Questo processo può poi essere applicato per poter fare dei confronti nel tempo e vedere quanto è variata la copertura. Occorre per prima cosa lanciare il pacchetto "ggplot2"
+
+library(ggplot2)
+
+# Lanciato il pacchetto provvedo a dichiarare il numero di classi visibili nell'immagine attraverso la funzione im.classify e inoltre assegno la funzione con il relativo argomento ad un oggetto.
+
+c2017 <- im.classify(cic2017, num_clusters=2) # Segno due classi poichè con una identifico la copertura vegetale e con l'altra il suolo nudo, la classe 1 sarà quella della vegetazione e la classe 2 sarà 
+# quella del suolo nudo
+
+# Si genera un cluster che prende dei pixel casuali selezionati dall'algoritmo, la prima classe sono i livelli più bassi, la seconda sono quelli più alti. Ripeto l'operazione anche per il 2024
+
+c2024 <- im.classify(cic2024, num_clusters=2) # Classe 1 vegetazione, Classe 2 suolo nudo
+
+# Procedo poi a calcolare il numero di pixel di un cluster su un altro, utilizzo la funzione freq, per calcolare la frequenza assoluta dei pixel di ogni classe
+
+f2017 <- freq(c2017)
+
+f2024 <- freq(c2024)
+
+# Per calcolarci le frequenze assolute, occorre ottenere il numero totale di celle presenti, per questo ocorre la funzione ncell, sempre del pacchetto ggplot2, e poi dividere le frequenze assolute per il
+# totale ottenuto. Calcolerò poi anche le percentuali moltiplicando il risultato ottenuto per cento.
+
+tot2017 <- ncell(c2017)
+
+tot2024 <- ncell(c2024)
+
+prop2017 = f2017 / tot2017
+
+prop2024 = f2024 / tot2024
+
+perc2017 = prop2017 * 100
+
+perc2024 = prop2024 * 100
+
+# Otteniamo che le percentuali differentemente da quanto ottenuto con il risultato precedente in cui il colore blu sembrava prevalere sui tre anni, dal 2017 al 2024 le percentuali sono rimaste più o meno 
+# le stesse in 7 anni.
+
+#Possiamo calcolarci la deviazione standard dell'NDVI per poter confrontare il dato del 2017 con il dato del 2024. per farlo utilizziamo la funzione focal.
+
+sd2017 <- focal(b2017nir, matrix(1/9, 3, 3), fun= sd)
+
+sd2024 <- focal(b2024nir, matrix(1/9, 3, 3), fun= sd)
+
+# Raggruppo i due risultati ottenuti con uno stack, per poi plottarli
+
+sdstack <- c(sd2017, sd2024)
+
+plot(sdstack, col=ccl)
+
 
 # Per rendere le informazioni accessibili anche a coloro che soffronto di daltonismo, posso però plottare solo i valori DVI e NDVI.
 
