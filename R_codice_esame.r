@@ -91,7 +91,7 @@ NDVIcic2024 <- DVIcic2024 / cic2024[[4]] + cic2024[[1]]
 
 # Adesso creo un reticolo 2x2 in cui inserisco i plot dei vari NDVI per trare le conclusioni circa la riduzione o l'aumento della massa vegetale viva.
 
-par(mfrow = c(3, 1))
+par(mfrow = c(1, 3))
 plot(NDVIcic2017, col=ccl)
 plot(NDVIcic2020, col=ccl)
 plot(NDVIcic2024, col=ccl)
