@@ -55,7 +55,7 @@ pairs(cic2024)
 
 # Fatto ciò vado a creare un reticolo che mi permette di confrontare le tre immagini con i colori naturali, per controllare se a vista d'occhio si vedono delle differenze nella vegetazione.
 
-par(mfrow=c(2,2)) # La funzione par mi peremtte di creare un reticolo, specificando mfrow con c(2,2) creo un reticolo di 2x2
+par(mfrow=c(1,3)) # La funzione par mi peremtte di creare un reticolo, specificando mfrow con c(1,3) creo un reticolo di 1x3 dove 1 è il n di righe e 3 è il numero di colonne
 
 im.plotRGB.auto(cic2017) # La funzione im.plotRGBauto è una funzione che plotta l'immagine seguendo il normale schema di colori RGB, ovvero con la prima banda, che in condizioni standard è il rosso, sul rosso
 # la seconda banda che di norma è il verde sul verde e la terza banda che di norma è il blu sul blu
@@ -140,6 +140,25 @@ prop2024 = f2024 / tot2024
 perc2017 = prop2017 * 100
 
 perc2024 = prop2024 * 100
+
+# Possiamo sfruttare la funzione pie() di ggplot2 per creare un grafico a torta che ci dia una dimostrazione grafica, prima però installo un pacchetto di R chiamato RColorBrewer
+install.packages("RColorBrewer")
+library(RColorBrewer)
+
+# Creo una palette apposita per i grafici
+
+graphpalette <-  brewer.pal(5, "Accent")
+
+# Ottengo i valori numerici delle percentuali e li assegno a due nuovi oggetti
+per2024 <- c(35.06785, 64.93215)
+per2017 <- c(35.9142, 64.0858)
+
+# Plotto utilizzando la funzione pie()
+
+pie(per2024, border="white", col=graphpalette)
+
+pie(per2017, border"white", col=graphpalette)
+
 
 # Otteniamo che le percentuali differentemente da quanto ottenuto con il risultato precedente in cui il colore blu sembrava prevalere sui tre anni, dal 2017 al 2024 le percentuali sono rimaste più o meno 
 # le stesse in 7 anni.
