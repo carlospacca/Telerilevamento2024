@@ -141,6 +141,19 @@ perc2017 = prop2017 * 100
 
 perc2024 = prop2024 * 100
 
+# Creiamo un data frame con la funzione data.frame(), prima però creiamo gli argomenti delle classi e gli assi con i dati
+class <- c("Suolo", "Foresta")
+y2017 <- c(35.1 , 64.9)
+y2024 <- c(35.1 , 64.9)
+
+tabella <- data.frame(class, y2017, y2024) # class contiene i nomi dei dati, y2017 ha i dati di suolo e foresta del 2017, y2024 ha i dati di suolo e foresta del 2024
+
+# Con ggplot abbiamo la rappresentazione grafica dei due dati
+
+ggplot(tabella, aes(x=class, y=y2017, color=class))+ geom_bar(stat="identity", fill="white")
+
+ggplot(tabella, aes(x=class, y=y2024, color=class))+ geom_bar(stat="identity", fill="white")
+
 # Possiamo sfruttare la funzione pie() di ggplot2 per creare un grafico a torta che ci dia una dimostrazione grafica, prima però installo un pacchetto di R chiamato RColorBrewer
 install.packages("RColorBrewer")
 library(RColorBrewer)
